@@ -6,6 +6,7 @@ class CalcController {
         this._dateEl = document.querySelector("#data");
         this._currentdate;
         this.initialize();
+        this.initializeButtonsEvents();
     }
 
     initialize() {
@@ -17,6 +18,26 @@ class CalcController {
             this.setDisplayDateTime();
 
         }, 1000);
+    }
+
+    addEventListenerAll(element, events, func){
+        events.split(' ').forEach(event => {
+            element.addEventListener(event, func, false);
+        });
+    }
+
+    initializeButtonsEvents(){
+        let buttons = document.querySelectorAll("#buttons > g, #parts > g");
+
+        buttons.forEach((btn, index)=>{
+            this.addEventListenerAll(btn,'click drag', e=>{
+                console.log(btn.className.baseVal.replace("btn-", ""));
+            });
+
+            this.addEventListenerAll(btn ,'mouseover mouseup mousedown', e=>{
+                btn.style.cursor = "pointer";
+            });
+        });
     }
 
     setDisplayDateTime() {
